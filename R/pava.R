@@ -1,4 +1,4 @@
-pava <- function(y, w=NULL, long.out = FALSE)
+pava <- function(y, w=NULL, decreasing=FALSE, long.out = FALSE)
 {
 #
 # Function 'pava'.  To perform isotonic regression for a simple
@@ -9,9 +9,11 @@ pava <- function(y, w=NULL, long.out = FALSE)
 # which thus keeps track of the level sets.  Otherwise only the fitted
 # values are returned.
 # 
+	if(decreasing) y <- rev(y)
 	n <- length(y)
 	if(is.null(w))
 		w <- rep(1, n)
+	else if(decreasing) w <- rev(w)
 	if(n == 1) {
 		if(long.out) return(list(y=y,w=w,tr=1))
 		else return(y)
@@ -25,7 +27,14 @@ pava <- function(y, w=NULL, long.out = FALSE)
 			n=as.integer(n),
 			PACKAGE="Iso"
 			)
-	rslt <- if(long.out) list(y = rslt$y, w = rslt$w, tr = rslt$kt)
-			else rslt$y
+	if(long.out) {
+		tr <- rslt$kt
+		if(decreasing) {
+			tr <- unname(unlist(tapply(1:n,-rev(tr),
+				function(x){rep(min(x),length(x))})))
+			rslt <- list(y=rev(rslt$y),w=rev(rslt$w),tr=tr)
+		}
+		else rslt <- list(y = rslt$y, w = rslt$w, tr = rslt$kt)
+	} else rslt <- if(decreasing) rev(rslt$y) else y
 	rslt
 }

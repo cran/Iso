@@ -2,16 +2,16 @@
 \alias{pava}
 \alias{pava.sa}
 \title{
-Calculate the linear increasing order isotonic regression of a set of data.
-}
+Calculate the linear increasing (or decreasing) order isotonic
+regression of a set of data.  }
 \description{
 The ``pool adjacent violators algorithm'' (PAVA) is applied to
 calculate the isotonic regression of a set of data, with respect
-to the usual increasing linear ordering on the indices.
+to the usual increasing (or decreasing) linear ordering on the indices.
 }
 \usage{
-pava(y, w, long.out=FALSE)
-pava.sa(y, w, long.out=FALSE)
+pava(y, w, decreasing=FALSE, long.out=FALSE)
+pava.sa(y, w, decreasing=FALSE, long.out=FALSE)
 }
 \arguments{
 \item{y}{
@@ -22,6 +22,9 @@ Optional vector of weights to be used for calculating a
 weighted isotonic regression; if w is not given, all weights
 are taken to equal 1.
 }
+\item{decreasing}{Logical scalar; should the isotonic regression
+be calculated with respect to \emph{decreasing} (rather than
+increasing) order?}
 \item{long.out}{
 Logical argument controlling the nature of the value returned.
 }}
@@ -58,11 +61,19 @@ Order Restricted Statistical Inference.  Wiley, New York.
 }
 \seealso{\code{\link{ufit}()}}
 \examples{
+# Increasing order:
 y <- (1:20) + rnorm(20)
 ystar <- pava(y)
 plot(y)
 lines(ystar,type='s')
+# Decreasing order:
+z <- NULL
+for(i in 4:8) {
+	z <- c(z,rep(8-i+1,i)+0.05*(0:(i-1)))
+}
+zstar <- pava(z,decreasing=TRUE)
+plot(z)
+lines(zstar,type='s')
 }
 \keyword{regression}
 \keyword{nonlinear}
-% Converted by Sd2Rd version 1.21.

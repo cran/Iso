@@ -1,4 +1,4 @@
-pava.sa <- function(y,w=NULL,long.out=FALSE)
+pava.sa <- function(y,w=NULL,decreasing=FALSE,long.out=FALSE)
 {
 #
 # Function 'pava.sa' (stand-alone pava). To perform isotonic
@@ -12,8 +12,12 @@ pava.sa <- function(y,w=NULL,long.out=FALSE)
 # returned.
 # 
 
+
+if(decreasing) y <- rev(y)
 n <- length(y)
-if(is.null(w)) w <- rep(1,n)
+if(is.null(w))
+	w <- rep(1,n)
+else if(decreasing) w <- rev(w)
 r <- rep(1,n)
 repeat {
 	stble <- TRUE
@@ -37,6 +41,11 @@ if(stble) break
 }
 y  <- rep(y,r)
 w  <- rep(w,r)
+if(decreasing) {
+	y <- rev(y)
+	w <- rev(w)
+	r <- rev(r)
+}
 tr <- rep(tapply(1:length(y),rep(1:length(r),r),min),r)
 if(long.out) list(y=y,w=w,tr=tr) else y
 }
