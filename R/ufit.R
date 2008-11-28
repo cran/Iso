@@ -1,4 +1,5 @@
-ufit <- function(y,lmode=NULL,x=NULL,w=NULL,lc=TRUE, rc=TRUE)
+ufit <- function(y,lmode=NULL,x=NULL,w=NULL,lc=TRUE, rc=TRUE,
+                 type=c("raw","stepfun","both"))
 {
 #
 # Function `ufit'.  Calculates the isotonic unimodal fit to a data
@@ -11,6 +12,7 @@ ufit <- function(y,lmode=NULL,x=NULL,w=NULL,lc=TRUE, rc=TRUE)
 # adjacent points, i.e. either at x_i or at x_{i+1}.  If x is null, x
 # is taken to be an equispaced sequence on [0,1].
 #
+type <- match.arg(type)
 
 n <- length(y)
 if(is.null(w)) w <- rep(1,n)
@@ -44,8 +46,17 @@ rslt <- .Fortran(
 if(rslt$goof) stop('Goof in unimode subroutine called by ufit subroutine.\n')
 imode <- if(lmode < 0) rslt$xmode else lmode
 lmode <- if(lmode < 0) x[imode] else mode.save
+ys <- rslt$y
+if(type%in%c("stepfun","both")) {
+	kind <- 1+which(diff(ys)!=0)
+	if(!(n%in%kind)) kind <- c(kind,n)
+	y0    <- c(ys[1],ys[kind])
+	h     <- stepfun(x[kind],y0)
+}
 i     <- floor(imode)
-if(!lc) rslt$y[i]   <- NA
-if( (!rc) & (i < n) ) rslt$y[i+1] <- NA
-list(x=x,y=rslt$y,mode=lmode,mse=rslt$mse)
+if(!lc) ys[i]   <- NA
+if( (!rc) & (i < n) ) ys[i+1] <- NA
+switch(type,raw=list(x=x,y=ys,mode=lmode,mse=rslt$mse),
+            stepfun=h,
+            both=list(x=x,y=ys,mode=lmode,mse=rslt$mse,h=h))
 }

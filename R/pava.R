@@ -1,4 +1,4 @@
-pava <- function(y, w=NULL, decreasing=FALSE, long.out = FALSE)
+pava <- function(y, w=NULL, decreasing=FALSE, long.out = FALSE, stepfun=FALSE)
 {
 #
 # Function 'pava'.  To perform isotonic regression for a simple
@@ -27,14 +27,22 @@ pava <- function(y, w=NULL, decreasing=FALSE, long.out = FALSE)
 			n=as.integer(n),
 			PACKAGE="Iso"
 			)
-	if(long.out) {
+	y <- if(decreasing) rev(rslt$y) else rslt$y
+	if(long.out | stepfun ) {
 		tr <- rslt$kt
-		if(decreasing) {
+		if(decreasing) 
 			tr <- unname(unlist(tapply(1:n,-rev(tr),
 				function(x){rep(min(x),length(x))})))
-			rslt <- list(y=rev(rslt$y),w=rev(rslt$w),tr=tr)
-		}
-		else rslt <- list(y = rslt$y, w = rslt$w, tr = rslt$kt)
-	} else rslt <- if(decreasing) rev(rslt$y) else y
-	rslt
+	}
+	if(long.out) {
+		w <- if(decreasing) rev(rslt$w) else rslt$w
+		lout <- list(y = y, w = w, tr = tr)
+	}
+	if(stepfun) {
+		knots <- 1+which(diff(tr)!=0)
+		y0    <- c(y[1],y[knots])
+		h     <- stepfun(knots,y0)
+	}
+	ntype <- 1+sum(c(long.out,stepfun)*(1:2))
+	switch(ntype,y,lout,h,c(lout,list(h=h)))
 }

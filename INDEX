@@ -1,4 +1,4 @@
-pava                     calculate the linear-order isotonic regression
-                         of a set of data
-ufit                     calculate an --- or the optimal --- unimodal
-                         isotonic regression of a set of data
+pava                    Calculate the linear increasing (or decreasing)
+                        order isotonic regression of a set of data.
+ufit                    Calculate an -- or the optimal -- unimodal
+                        isotonic regression of a set of data.
