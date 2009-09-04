@@ -1,11 +1,13 @@
 Package: Iso
-Version: 0.0-6
-Date: 2008-11-28
+Version: 0.0-7
+Date: 2009-09-04
 Title: Functions to perform isotonic regression.
 Author: Rolf Turner <r.turner@auckland.ac.nz>
 Maintainer: Rolf Turner <r.turner@auckland.ac.nz>
-Depends: R (>= 0.99)
+Depends: R (>= 1.7.0)
 Description: Does linear order and unimodal order isotonic regression.
-License: GPL version 2 or newer
+License: GPL (>= 2)
 URL: http://www.math.unb.ca/~rolf/
-Packaged: Fri Nov 28 14:48:01 2008; rturner
+Packaged: 2009-09-04 01:57:43 UTC; rturner
+Repository: CRAN
+Date/Publication: 2009-09-04 07:57:37

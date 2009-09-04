@@ -1,0 +1,20 @@
+
+# Information about versions 0.0-0 (?) 0.0-1, ..., 0.0-3,
+# is lost in the mists of time.
+#
+# Information about the changes 0.0-4 |--> 0.0-5 |--> 0.0-6
+# will be added ``when I get around to it''. :-)
+
+# 24/August/2009
+
+Version 0.0-6 |--> 0.0-7:
+
+(1) Added namespace; changed name of .First.lib()
+    in First.R to .onLoad().  (As one must when adding
+    a namespace, apparently.)
+
+    Thanks to Tobias Verbeke for instigating this change
+    and for showing me how to do it.
+
+(2) Removed announcement of old changes from .First.lib();
+    put in announcement of addition of namespace.
