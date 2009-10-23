@@ -18,3 +18,12 @@ Version 0.0-6 |--> 0.0-7:
 
 (2) Removed announcement of old changes from .First.lib();
     put in announcement of addition of namespace.
+
+Version 0.0-7 |--> 0.0-8:
+
+(1) Added bivariate isotonic capabilities, using Applied
+    Statistics Algorithm AS 206, at the request of
+    Paramjit Gill.
+
+(2) Corrected the spelling of ``NAMESPACE'' (!!!) in a
+    message produced by the .onLoad() function.

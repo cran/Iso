@@ -84,7 +84,7 @@ In particular it is \emph{right} continuous.
 Robertson, T., Wright, F. T. and Dykstra, R.  L.  (1988).
 Order Restricted Statistical Inference.  Wiley, New York.
 }
-\seealso{\code{\link{ufit}()} \code{\link{stepfun}()} }
+\seealso{\code{\link{ufit}()} \code{\link{stepfun}()} \code{\link{biviso}()} }
 \examples{
 # Increasing order:
 y <- (1:20) + rnorm(20)

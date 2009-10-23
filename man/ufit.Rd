@@ -96,7 +96,7 @@ Turner, T. R., and Wollan, P. C. (1997) Locating a maximum using
 isotonic regression.  Computational Statistics and Data Analysis
 vol. 25, pp. 305 -- 320.
 }
-\seealso{\code{\link{pava}()}}
+\seealso{\code{\link{pava}()} \code{\link{biviso}()} }
 
 \examples{
 x <- c(0.00,0.34,0.67,1.00,1.34,1.67,2.00,2.50,3.00,3.50,4.00,4.50,
