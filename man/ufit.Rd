@@ -1,8 +1,7 @@
 \name{ufit}
 \alias{ufit}
 \title{
-Calculate an --- or the optimal --- unimodal isotonic regression
-of a set of data.
+Unimodal isotonic regression.
 }
 \description{
 A "divide and conquer" algorithm is applied to calculate the isotonic

@@ -1,5 +1,0 @@
-biviso                  Bivariate isotonic regression.
-pava                    Calculate the linear increasing (or decreasing)
-                        order isotonic regression of a set of data.
-ufit                    Calculate an -- or the optimal -- unimodal
-                        isotonic regression of a set of data.

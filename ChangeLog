@@ -19,6 +19,8 @@ Version 0.0-6 |--> 0.0-7:
 (2) Removed announcement of old changes from .First.lib();
     put in announcement of addition of namespace.
 
+# 23/October/2009
+
 Version 0.0-7 |--> 0.0-8:
 
 (1) Added bivariate isotonic capabilities, using Applied
@@ -27,3 +29,11 @@ Version 0.0-7 |--> 0.0-8:
 
 (2) Corrected the spelling of ``NAMESPACE'' (!!!) in a
     message produced by the .onLoad() function.
+
+# 5/September/2011
+
+Version 0.0-8: |--> 0.0-9:
+
+(1) Changed some titles in the help files to avoid cock-ups
+    in the INDEX file (since R CMD INSTALL now seems to truncate
+    titles that are over 72 characters long.

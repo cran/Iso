@@ -2,8 +2,8 @@
 \alias{pava}
 \alias{pava.sa}
 \title{
-Calculate the linear increasing (or decreasing) order isotonic
-regression of a set of data.  }
+Linear order isotonic regression.
+}
 \description{
 The ``pool adjacent violators algorithm'' (PAVA) is applied to
 calculate the isotonic regression of a set of data, with respect
