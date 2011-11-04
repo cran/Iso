@@ -37,3 +37,11 @@ Version 0.0-8: |--> 0.0-9:
 (1) Changed some titles in the help files to avoid cock-ups
     in the INDEX file (since R CMD INSTALL now seems to truncate
     titles that are over 72 characters long.
+
+Version 0.0.9 |--> 0.0-10
+
+(1) Got rid of the INDEX file completely!  Seems not to be needed,
+    and just causes trouble.
+
+(2) Got rid of the "now has a NAMESPACE" message in First.R, since
+    *everything* now has a namespace!
