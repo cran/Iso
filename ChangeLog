@@ -45,3 +45,30 @@ Version 0.0.9 |--> 0.0-10
 
 (2) Got rid of the "now has a NAMESPACE" message in First.R, since
     *everything* now has a namespace!
+
+# 11/January/2013
+
+Version 0.0-10 |--> 0.0-11
+
+(1) Fixed a bug in the Fortran code for the "smooth" algorithm
+    underlying the biviso() function.  In this code some dimensions
+    were hard-wired at 20. This caused the function to throw an error
+    if the matrix of values being isotonized was bigger than 20 x 20.
+    I revised the code so that the dimensions are now dynamic.
+
+    Thanks go to Jing Qin by whom this bug was drawn to my attention.
+
+(2) While doing some checking I noticed that the function was
+    returning results that weren't *quite* isotonic.  Made
+    adjustments to value of "eps" and made "EPS" an argument of
+    the "PAV" subroutine.  This appeared to reduce the problem
+    substantially but did not quite eliminate it completely.
+
+(3) It also made the algorithm sometimes fail to converge, so
+    I incremented the default value of "ncycle" from 1000 to
+    10000, which seems to fix the problem.
+
+# 11/January/2013
+
+(1) Changed the function in First.R from .onLoad() to
+.onAttach() to satisfy CRAN bureaucracy.

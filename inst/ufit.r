@@ -37,8 +37,8 @@ if(xmode < 0) {
 		}
 		x0 = x0+1.d0
 	}
-	k1 = xmax-0.5d0
-	k2 = xmax+0.5d0
+	k1 = int(xmax-0.5d0)
+	k2 = int(xmax+0.5d0)
 }
 else xmax = xmode
 do j = 1,n {
@@ -48,16 +48,16 @@ do j = 1,n {
 call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
 if(goof) return
 if(xmode < 0) {
-	mse = ssemin/n
-	if(x(k1)>=x(k2)) xmode=k1
-	else xmode=k2
+	mse = ssemin/dble(n)
+	if(x(k1)>=x(k2)) xmode=dble(k1)
+	else xmode=dble(k2)
 }
 else {
 	sse = 0.d0
 	do j = 1,n {
 		sse = sse + (x(j)-xk(j))**2
 	}
-	mse = sse/n
+	mse = sse/dble(n)
 }
 return
 end

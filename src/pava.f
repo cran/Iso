@@ -6,7 +6,6 @@ C Output from Public domain Ratfor, version 1.0
       do23000 i = 1,n 
       kt(i) = i
 23000 continue
-23001 continue
       if(n.eq.1)then
       return
       endif
@@ -21,7 +20,6 @@ C Output from Public domain Ratfor, version 1.0
       kt(j) = k2
       endif
 23011 continue
-23012 continue
       wnew = w(i-1) + w(i)
       ynew = (w(i-1)*y(i-1)+w(i)*y(i))/wnew
       do23015 j = 1,n 
@@ -30,15 +28,13 @@ C Output from Public domain Ratfor, version 1.0
       w(j) = wnew
       endif
 23015 continue
-23016 continue
       same = .false.
       endif
 23007 continue
-23008 continue
       if(same)then
       goto 23006
       endif
-23005 goto 23004
+      goto 23004
 23006 continue
       return
       end

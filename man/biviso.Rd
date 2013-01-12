@@ -9,7 +9,7 @@
    linear ordering on both variables.
 }
 \usage{
-biviso(y, w = NULL, eps = 1e-04, ncycle = 1000)
+biviso(y, w = NULL, eps = NULL, ncycle = 10000)
 }
 \arguments{
   \item{y}{
@@ -26,12 +26,13 @@ biviso(y, w = NULL, eps = 1e-04, ncycle = 1000)
   if each entry of the output matrix, after the completion of the
   current iteration, does not differ by more than \code{eps} from
   the corresponding entry of the matrix after the completion of the
-  previous iteration.
+  previous iteration.  If this argument is not supplied it defaults
+  to \code{sqrt(.Machine$double.eps)}.
 }
   \item{ncycle}{
   The maximum number of cycles of the iteration procedure.  If the
   procedure has not converged after \code{ncycle} iterations then
-  an error is given.
+  an error is given.  (See below.)
 }
 }
 \section{Error Messages}{
@@ -72,6 +73,29 @@ JRSSC (Applied Statistics), vol. 33, no. 3, pp. 352-357, 1984.
 \author{Rolf Turner
 \email{r.turner@auckland.ac.nz}
 \url{http://www.math.unb.ca}
+}
+\section{WARNING}{
+This  function appears not to achieve exact isotonicity, at least
+not quite.  For instance one can do:
+\preformatted{
+    set.seed(42)
+    u  <- matrix(runif(400),20,20)
+    iu <- biviso(u)
+    any(apply(iu,2,is.unsorted))
+}
+and get \code{TRUE}.  It turns out that columns 13, 14, and 16 of
+\code{iu} have exceptions to isotonicity.  E.g. six of the values
+of \code{diff(iu[,13])} are less than zero.  However only one of
+these is less than \code{sqrt(.Machine$double.eps)}, and then only
+\dQuote{marginally} smaller.
+
+So some of these negative values are \dQuote{numerically different}
+from zero, but not by much.  The largest in magnitude in this
+example, from column 16, is \code{-2.217624e-08} --- which is
+probably not of \dQuote{practical importance}.
+
+Note also that this example occurs in a very artificial context in
+which there is no actual isotonic structure underlying the data.
 }
 
 \seealso{ \code{\link{pava}()} \code{\link{pava.sa}()} \code{\link{ufit}()}

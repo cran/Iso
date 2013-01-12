@@ -1,4 +1,4 @@
-biviso <- function(y, w=NULL,eps=0.0001,ncycle=1000) {
+biviso <- function(y, w=NULL,eps=NULL,ncycle=10000) {
 #
 # Function 'biviso'.  To perform bivariate isotonic regression for simple
 # (increasing) linear ordering on both variables.  Uses Applied Statistics
@@ -15,6 +15,9 @@ if(is.null(w)) w <- matrix(1,nrow=nrow(y),ncol=ncol(y)) else {
 	if(!isTRUE(all.equal(dim(y),dim(w))))
 		stop("Arguments \"y\" and \"w\" must have the same dimension.\n")
 }
+
+# Set epsilon:
+if(is.null(eps)) eps <- sqrt(.Machine$double.eps)
 
 nr   <- nrow(y)
 nc   <- ncol(y)
@@ -33,6 +36,11 @@ rslt <- .Fortran(
 	g=double(nr*nc),
 	eps=as.double(eps),
 	ifault=integer(1),
+        fx=double(nd),
+        pw=double(nd),
+        wi=double(nd),
+        wt=double(nd),
+        nw=integer(nd),
 	PACKAGE="Iso"
 )
 if(rslt$ifault != 0) {
