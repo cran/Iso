@@ -9,7 +9,8 @@
    linear ordering on both variables.
 }
 \usage{
-biviso(y, w = NULL, eps = NULL, ncycle = 10000)
+biviso(y, w = NULL, eps = NULL, eps2 = 1e-9, ncycle = 50000,
+       fatal = TRUE, warn = TRUE)
 }
 \arguments{
   \item{y}{
@@ -29,15 +30,34 @@ biviso(y, w = NULL, eps = NULL, ncycle = 10000)
   previous iteration.  If this argument is not supplied it defaults
   to \code{sqrt(.Machine$double.eps)}.
 }
+  \item{eps2}{
+  Criterion used to determine whether isotonicity is \dQuote{violated},
+  whence whether (further) application of the \dQuote{pool adjacent violators}
+  procedure is required.
+}
   \item{ncycle}{
-  The maximum number of cycles of the iteration procedure.  If the
-  procedure has not converged after \code{ncycle} iterations then
-  an error is given.  (See below.)
+  The maximum number of cycles of the iteration procedure.  Must be
+  at least 2 (otherwise an error is given).  If the procedure has not
+  converged after \code{ncycle} iterations then an error is given.
+  (See below.)
+}
+  \item{fatal}{
+  Logical scalar.  Should the function stop if the subroutine
+  returns an error code other than 0 or 4?  If \code{fatal} is
+  \code{FALSE} then output is returned by the function even if
+  there was a \dQuote{serious} fault.  One can set \code{fatal=FALSE}
+  to inspect the values of the objective matrix at various interim
+  stages prior to convergence.  See \bold{Examples}.
+}
+  \item{warn}{
+  Logical scalar. Should a warning be produced if the subroutine
+  returns a value of \code{ifault} equal to 4 (or to any other
+  non-zero value when \code{fatal} has been set to \code{FALSE})?
 }
 }
 \section{Error Messages}{
 The subroutine comprising Algorithm AS 206 produces an error
-code \code{ifault} with values from \code{1} to \code{6}
+code \code{ifault} with values from \code{0} to \code{6}
 The meaning of these codes is as follows:
 \itemize{
 \item 0: No error.
@@ -103,11 +123,14 @@ which there is no actual isotonic structure underlying the data.
 \examples{
 x <- 1:20
 y <- 1:10
-xy <- outer(x,y,function(a,b){a+b+0.5*a*b})
+xy <- outer(x,y,function(a,b){a+b+0.5*a*b}) + rnorm(200)
 ixy <- biviso(xy)
 
+set.seed(42)
 u <- matrix(runif(400),20,20)
 v <- biviso(u)
+progress <- list()
+for(n in 1:9) progress[[n]] <- biviso(u,ncycle=50*n,fatal=FALSE,warn=FALSE)
 }
 \keyword{regression}
 \keyword{nonlinear}

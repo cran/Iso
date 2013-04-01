@@ -5,9 +5,9 @@
 # Information about the changes 0.0-4 |--> 0.0-5 |--> 0.0-6
 # will be added ``when I get around to it''. :-)
 
-# 24/August/2009
-
 Version 0.0-6 |--> 0.0-7:
+
+# 24/August/2009
 
 (1) Added namespace; changed name of .First.lib()
     in First.R to .onLoad().  (As one must when adding
@@ -19,9 +19,9 @@ Version 0.0-6 |--> 0.0-7:
 (2) Removed announcement of old changes from .First.lib();
     put in announcement of addition of namespace.
 
-# 23/October/2009
-
 Version 0.0-7 |--> 0.0-8:
+
+# 23/October/2009
 
 (1) Added bivariate isotonic capabilities, using Applied
     Statistics Algorithm AS 206, at the request of
@@ -30,9 +30,9 @@ Version 0.0-7 |--> 0.0-8:
 (2) Corrected the spelling of ``NAMESPACE'' (!!!) in a
     message produced by the .onLoad() function.
 
-# 5/September/2011
-
 Version 0.0-8: |--> 0.0-9:
+
+# 5/September/2011
 
 (1) Changed some titles in the help files to avoid cock-ups
     in the INDEX file (since R CMD INSTALL now seems to truncate
@@ -40,15 +40,17 @@ Version 0.0-8: |--> 0.0-9:
 
 Version 0.0.9 |--> 0.0-10
 
+# 04/November/2011
+
 (1) Got rid of the INDEX file completely!  Seems not to be needed,
     and just causes trouble.
 
 (2) Got rid of the "now has a NAMESPACE" message in First.R, since
     *everything* now has a namespace!
 
-# 11/January/2013
-
 Version 0.0-10 |--> 0.0-11
+
+# 11/January/2013
 
 (1) Fixed a bug in the Fortran code for the "smooth" algorithm
     underlying the biviso() function.  In this code some dimensions
@@ -68,7 +70,43 @@ Version 0.0-10 |--> 0.0-11
     I incremented the default value of "ncycle" from 1000 to
     10000, which seems to fix the problem.
 
-# 11/January/2013
+Version 0.0-11 |--> 0.0-12
 
-(1) Changed the function in First.R from .onLoad() to
-.onAttach() to satisfy CRAN bureaucracy.
+# 12/January/2013
+
+(1) Changed the file First.R to contain two functions:
+    .onLoad() to load the Fortran code, and
+    .onAttach() to produce the startup message.
+
+Version 0.0-12 |--> 0.0-13
+
+# 16/January/2013
+
+(1) Changed biviso() to use two "epsilon" arguments, namely "eps"
+    and "eps2" and changed the code of "smooth.f" to make use of
+    these.  The "eps" argument is used for determining convergence.
+    The "eps2" argument gets passed to the PAV() subroutine and is
+    used for determined whether there are adjacent violators.
+
+Version 0.0-13 |--> 0.0-14
+
+# 31/March/2013
+
+(1) Fixed a typo in biviso.R and one in biviso.Rd.
+
+# 1/April/2013
+
+(2) Added arguments "fatal" and "warn" to biviso(); the first (if
+    set to FALSE) permits the return of "intermediate" values where
+    convergence has not yet been achieved.  (This addition prompted
+    by a request from Revathi Ananthakrishnan.)
+
+(3) Added a check in biviso() that ncycle is at least 2.
+
+(4) Modified the first example for biviso() to introduce some random
+    non-isotonicity.
+
+(5) Added an example illustrating the use of fatal=FALSE
+    in biviso().
+
+Submitted to CRAN.

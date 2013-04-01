@@ -1,4 +1,5 @@
-biviso <- function(y, w=NULL,eps=NULL,ncycle=10000) {
+biviso <- function(y, w=NULL,eps=NULL,eps2=1e-9,ncycle=50000,
+                   fatal=TRUE,warn=TRUE) {
 #
 # Function 'biviso'.  To perform bivariate isotonic regression for simple
 # (increasing) linear ordering on both variables.  Uses Applied Statistics
@@ -6,6 +7,10 @@ biviso <- function(y, w=NULL,eps=NULL,ncycle=10000) {
 # Gordon Bril, Richard Dykstra, Carolyn Pillers, and Tim Robertson;
 # Algorithm AS 206; JRSSC (Applied Statistics), vol. 33, no. 3, pp.
 # 352-357, 1984.)
+
+# Check that ncycle makes sense:
+if(ncycle!=round(ncycle) | ncycle < 2)
+    stop("Argument ncycle must be an integer with value at least 2.\n")
 
 # Check that y is of the right shape:
 if(!is.numeric(y) | !is.matrix(y))
@@ -34,7 +39,8 @@ rslt <- .Fortran(
 	ncycle=as.integer(ncycle),
 	icycle=integer(1),
 	g=double(nr*nc),
-	eps=as.double(eps),
+	eps1=as.double(eps),
+	eps2=as.double(eps2),
 	ifault=integer(1),
         fx=double(nd),
         pw=double(nd),
@@ -44,13 +50,17 @@ rslt <- .Fortran(
 	PACKAGE="Iso"
 )
 if(rslt$ifault != 0) {
-	if(rslt$ifault == 4) {
+	if(rslt$ifault == 4 && warn) {
 		warning(paste("A near zero weight less than delta=0.00001\n",
-                              "was replace by delta.\n",sep=""))
-	} else
+                              "was replaced by delta.\n",sep=""))
+	} else if(fatal) {
 		stop(paste("Failed with ifault = ",rslt$ifault,".\n",sep=""))
+        } else if(warn) {
+		warning(paste("Algorithm gave ifault = ",rslt$ifault,".\n",sep=""))
+	}
 }
 m <- matrix(rslt$g,nrow=nr,ncol=nc)
 attr(m,"icycle") <- rslt$icycle
+attr(m,"ifault") <- rslt$ifault
 m
 }

@@ -1,5 +1,5 @@
       SUBROUTINE SMOOTH(NROW, NCOL, NDIM, X, W, A, B, NCYCLE, ICYCLE, G,
-     *   EPS, IFAULT, FX, PW, W1, WT, NW)
+     *   EPS1, EPS2, IFAULT, FX, PW, W1, WT, NW)
 C
 C     ALGORITHM AS 206  APPL. STATIST. (1984) VOL.33, NO.3
 C
@@ -85,14 +85,14 @@ C
         B(J,2) = A(I,J,3)
    30   CONTINUE
 C
-      CALL PAV(NCOL, NDIM, EPS, B, 1, B(1,2), B(1,3), FX,
+      CALL PAV(NCOL, NDIM, EPS2, B, 1, B(1,2), B(1,3), FX,
      * PW, W1, WT, NW)
 C
       KCOUNT = 0
       DO 40 J = 1, NCOL
         ORD = B(J,3)
         A(I,J,1) = ORD - B(J,1)
-        IF (ABS(ORD - G(I,J)) .LT. EPS) KCOUNT = KCOUNT + 1
+        IF (ABS(ORD - G(I,J)) .LT. EPS1) KCOUNT = KCOUNT + 1
         G(I,J) = ORD
    40   CONTINUE
 C
@@ -121,14 +121,14 @@ C
       DO 60 I = 1, NROW
    60   A(I,J,2) = G(I,J) - A(I,J,2)
 C
-      CALL PAV(NROW, NDIM, EPS, A(1,J,2), 1, A(1,J,3), B(1,3), FX,
+      CALL PAV(NROW, NDIM, EPS2, A(1,J,2), 1, A(1,J,3), B(1,3), FX,
      * PW, W1, WT, NW)
 C
       MCOUNT = 0
       DO 70 I = 1, NROW
         ORD = B(I,3)
         A(I,J,2) = ORD - A(I,J,2)
-        IF (ABS(ORD - G(I,J)) .LT. EPS) MCOUNT = MCOUNT + 1
+        IF (ABS(ORD - G(I,J)) .LT. EPS1) MCOUNT = MCOUNT + 1
         G(I,J) = ORD
    70   CONTINUE
 C
@@ -168,7 +168,7 @@ C
       END
 
 
-      SUBROUTINE PAV(K, NDIM, EPS, X, IORDER, W, FINALX,
+      SUBROUTINE PAV(K, NDIM, EPS2, X, IORDER, W, FINALX,
      *FX, PW, W1, WT, NW)
 C
 C     ALGORITHM AS 206.1  APPL. STATIST. (1984) VOL.33, NO.3
@@ -201,7 +201,7 @@ C
 C
 C     Determine if pooling is required
 C
-      IF (FX(I) - FX(I1) .LE. EPS) GO TO 30
+      IF (FX(I) - FX(I1) .LE. EPS2) GO TO 30
 C
 C     Pool the adjacent values
 C
@@ -226,7 +226,7 @@ C
 C     Determine if all values are ordered
 C
       DO 60 L = 1, IBEL
-   60 IF (FX(L) - FX(L+1) .LE. EPS) ICOUNT = ICOUNT + 1
+   60 IF (FX(L) - FX(L+1) .LE. EPS2) ICOUNT = ICOUNT + 1
       IF (ICOUNT .NE. IBEL) GO TO 20
 C
 C     Recover final ordered values
