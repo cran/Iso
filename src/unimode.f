@@ -19,6 +19,7 @@ C Output from Public domain Ratfor, version 1.0
       k2 = k2+1
       endif
 23000 continue
+23001 continue
       if(k1+k2 .eq. n)then
       if(k1 .gt. 0)then
       call pava(y1,w1,kt,k1)
@@ -26,6 +27,7 @@ C Output from Public domain Ratfor, version 1.0
       y(i) = y1(i)
       w(i) = w1(i)
 23010 continue
+23011 continue
       endif
       if(k2 .gt. 0)then
       call pava(y2,w2,kt,k2)
@@ -34,6 +36,7 @@ C Output from Public domain Ratfor, version 1.0
       y(j) = y2(i)
       w(j) = w2(i)
 23014 continue
+23015 continue
       endif
       return
       endif
@@ -72,25 +75,29 @@ C Output from Public domain Ratfor, version 1.0
       if(i .eq. n)then
       goto 23024
       endif
-      goto 23022
+23023 goto 23022
 23024 continue
       y(n) = yk
       ind(n) = k1+1
       do23033 i = 1,n 
       w1(ind(i)) = w(i)
 23033 continue
+23034 continue
       do23035 i = 1,n 
       w(i) = w1(i)
 23035 continue
+23036 continue
       call pava(y,w,kt,n)
       do23037 i = 1,n 
       y1(ind(i)) = y(i)
       w1(ind(i)) = w(i)
 23037 continue
+23038 continue
       do23039 i = 1,n 
       y(i) = y1(i)
       w(i) = w1(i)
 23039 continue
+23040 continue
       else
       goof = .true.
       endif

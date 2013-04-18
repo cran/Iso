@@ -110,3 +110,9 @@ Version 0.0-13 |--> 0.0-14
     in biviso().
 
 Submitted to CRAN.
+
+# 18/April/2013
+
+(1) Fixed up the Fortran dimension statements, getting
+rid of dummy 1's as the last dimensions (which now throws
+a warning from the compiler).

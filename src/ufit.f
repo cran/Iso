@@ -15,6 +15,7 @@ C Output from Public domain Ratfor, version 1.0
       x(j) = xk(j)
       w(j) = wk(j)
 23004 continue
+23005 continue
       call unimode(x,w,x1,w1,x2,w2,ind,kt,x0,n,goof)
       if(goof)then
       return
@@ -23,12 +24,14 @@ C Output from Public domain Ratfor, version 1.0
       do23008 j = 1,n 
       sse = sse + (x(j)-xk(j))**2
 23008 continue
+23009 continue
       if(sse .lt. ssemin)then
       ssemin = sse
       xmax = x0
       endif
       x0 = x0+1.d0
 23002 continue
+23003 continue
       k1 = int(xmax-0.5d0)
       k2 = int(xmax+0.5d0)
       else
@@ -38,6 +41,7 @@ C Output from Public domain Ratfor, version 1.0
       x(j) = xk(j)
       w(j) = wk(j)
 23012 continue
+23013 continue
       call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
       if(goof)then
       return
@@ -54,6 +58,7 @@ C Output from Public domain Ratfor, version 1.0
       do23020 j = 1,n 
       sse = sse + (x(j)-xk(j))**2
 23020 continue
+23021 continue
       mse = sse/dble(n)
       endif
       return

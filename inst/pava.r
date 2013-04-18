@@ -1,7 +1,7 @@
 subroutine pava(y,w,kt,n)
 implicit double precision(a-h,o-z)
 logical same
-dimension y(1), w(1), kt(1)
+dimension y(n), w(n), kt(n)
 
 # Note: `kt' <--> `keep track' (of the level sets).
 

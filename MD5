@@ -1,5 +1,5 @@
-27803cccbe534d85e4958327a8eb026e *ChangeLog
-741ed1fbffca1f6a1a3d5a827605d580 *DESCRIPTION
+30ddfabbcd891fa957d852930b80410e *ChangeLog
+822cca132348d7ec161e7d86a126478c *DESCRIPTION
 b3cae43d17aa7f0492a6af44b83dd774 *NAMESPACE
 7a25105b8776d573a2131cbfb209b5fb *R/First.R
 e721e931a4d92024a34c98d9a7a62c8e *R/biviso.R
@@ -8,14 +8,14 @@ bdb2898a60e100904d83265d23457d32 *R/pava.sa.R
 622e2e0c02b48caec0025d368446063d *R/ufit.R
 2b4c131e64a60203c7067430ccd4e0a6 *inst/Isotonic.for
 2ace808a381c598e616ce03b95e8440f *inst/makefor
-4ef48c6aba411c423811ff5820033d21 *inst/pava.r
+5cb8558f099b856dd8a27fc6773c0f8e *inst/pava.r
 cbbebf81197204959510757e372eaf5e *inst/smooth.f.orig
 1c1104fab550027dd09806b0ce1b33a5 *inst/ufit.r
 d4aba2cbc43116d4da88b2996d4dc75b *inst/unimode.r
 65f6ee69cf13a877ea1f4092870b4916 *man/biviso.Rd
 56a2235defd4bd9495cc5bff431ea7d0 *man/pava.Rd
 c59b6952d8c78fd73d2f0d10a444921c *man/ufit.Rd
-3828b2dae1907470203a8064434c79f6 *src/pava.f
+7e357534fc2e0be02f5f402a47c6c7d2 *src/pava.f
 2cc99b732e6467d634d990b4f9ac6315 *src/smooth.f
-d8bb5a4883866f132b8c5ab5f95d895a *src/ufit.f
-370c327a0339785c3e90277aa75fa4bb *src/unimode.f
+b8b648815216dd1a47d198221af32c21 *src/ufit.f
+f613340d0b840aa511ab6a309ede1209 *src/unimode.f
