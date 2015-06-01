@@ -92,7 +92,7 @@ JRSSC (Applied Statistics), vol. 33, no. 3, pp. 352-357, 1984.
 }
 \author{Rolf Turner
 \email{r.turner@auckland.ac.nz}
-\url{http://www.math.unb.ca}
+\url{http://www.stat.auckland.ac.nz/~rolf}
 }
 \section{WARNING}{
 This  function appears not to achieve exact isotonicity, at least

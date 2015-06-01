@@ -75,7 +75,7 @@ to do the actual work.
 }
 \author{Rolf Turner
 \email{r.turner@auckland.ac.nz}
-\url{http://www.math.unb.ca}
+\url{http://www.stat.auckland.ac.nz/~rolf}
 }
 \references{
 Mureika, R. A., Turner, T. R. and Wollan, P. C.  (1992).

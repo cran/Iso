@@ -7,12 +7,20 @@ dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind(n), kt(n)
 # Nude virgin of ufit --- 18/8/95.
 # The changes are based upon Pete's observation that when we are
 # seeking the OPTIMIUM mode (in terms of SSE) we need only search
-# over the ``half-points'' --- 1.5, 2.5, ..., n-0.5.  The optimum
-# half-point will give the same SSE as one of the two adjacent
-# integer points.  I.e. SSE(k+0.5) will be the same as either SSE(k)
-# or SSE(k+1).  It will be SSE(k) if y-hat_k >= y-hat_{k+1}, and
-# vice-versa.  The y-hat's are the fitted values corresponding to
-# assuming that the mode is k+0.5.
+# over the ``half-points'' --- 1.5, 2.5, ..., n-0.5.  If the optimum
+# is at k, then the half-points k-0.5 and k+05 give SSEs that are
+# at least as small as and hence are equal to the SSE at k.  This is
+# because if a function is increasing on 1,...,k and decreasing on
+# k,...n, then it is increasing on 1,...,(k-1)) and decresing on
+# k,...,n !!!  (And likewise for 1,...,k and (k+1),...n.)   Thus if
+# there is an optimum at k then there are optima at k-0.5 and k+0.5.
+# Of course if k=1 then k-0.5 is not considered and likewise if k=n
+# then k+0.5 is not considered.
+#
+# Note also that if there is an optimum at the half-point k-0.5, then
+# there is also a whole-point optimum either at k-1 or k.
+#
+# Explanation revised (corrected) 31/05/2015.
 
 if(xmode < 0) {
 	m      =  n-1
@@ -42,10 +50,12 @@ if(xmode < 0) {
 }
 else xmax = xmode
 do j = 1,n {
-	x(j) = xk(j)
-	w(j) = wk(j)
+   x(j) = xk(j)
+   w(j) = wk(j)
 }
+
 call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
+
 if(goof) return
 if(xmode < 0) {
 	mse = ssemin/dble(n)

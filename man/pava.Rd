@@ -78,7 +78,7 @@ In particular it is \emph{right} continuous.
 }
 \author{Rolf Turner
 \email{r.turner@auckland.ac.nz}
-\url{http://www.math.unb.ca}
+\url{http://www.stat.auckland.ac.nz/~rolf}
 }
 \references{
 Robertson, T., Wright, F. T. and Dykstra, R.  L.  (1988).

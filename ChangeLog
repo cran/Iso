@@ -109,10 +109,43 @@ Version 0.0-13 |--> 0.0-14
 (5) Added an example illustrating the use of fatal=FALSE
     in biviso().
 
-Submitted to CRAN.
+Version 0.0-14 |--> 0.0-15
 
 # 18/April/2013
 
 (1) Fixed up the Fortran dimension statements, getting
 rid of dummy 1's as the last dimensions (which now throws
 a warning from the compiler).
+
+Version 0.0-15 |--> 0.0-16
+
+# 31/May/2015
+
+(1) Corrected the comment at the beginning of ufit.r.
+
+(2) Changed unimode to deal with the linear ordering cases
+immediately without further fooling about.
+
+(3) Consequently removed checks on k1 == 0 and k2 == 0
+(if either of these happens something is toadally screwed up;
+goof is set to .true. and the function returns).
+
+Uploaded to CRAN 31/05/2015
+
+Version 0.0-16 |--> 0.0-17
+
+# 31/May/2015
+
+(1) Added unimode.sa() (standalone function for fitting a
+unimodal isotonic regression) to the package.  It is an
+"internal" undocumented function.
+
+(2) Fixed the munged-up date field in DESCRIPTION.
+
+# 01/June/2015
+
+(1) Fixed glitches in unimode.sa().
+
+(2) Fixed glitch in ufit.r.
+
+Uploaded to CRAN 01/06/2015
