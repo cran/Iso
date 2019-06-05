@@ -149,3 +149,10 @@ unimodal isotonic regression) to the package.  It is an
 (2) Fixed glitch in ufit.r.
 
 Uploaded to CRAN 01/06/2015
+
+Version 0.0-17 |--> 0.0-18
+
+(1) Wrote vignette explaining the algorithm used.
+
+(2) Added exemplary data set "vigour", the data on vigour
+of growth in stands of spruce trees in New Brunswick, Canada.

@@ -1,9 +1,9 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine unimode(y,w,y1,w1,y2,w2,ind,kt,tau,n,goof)
       implicit double precision(a-h,o-z)
-      logical goof
+      integer goof
       dimension y(n), w(n), y1(n), w1(n), y2(n), w2(n), ind(n), kt(n)
-      goof = .false.
+      goof = 0
       if(tau .ge. dble(n))then
       call pava(y,w,kt,n)
       return
@@ -41,7 +41,7 @@ C Output from Public domain Ratfor, version 1.0
 23008 continue
 23009 continue
       if(k1.eq.0 .or. k2.eq.0)then
-      goof = .true.
+      goof = 1
       return
       endif
       if(k1+k2 .eq. n)then
@@ -115,7 +115,7 @@ C Output from Public domain Ratfor, version 1.0
 23041 continue
 23042 continue
       else
-      goof = .true.
+      goof = 1
       endif
       return
       end

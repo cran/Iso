@@ -1,9 +1,9 @@
 subroutine unimode(y,w,y1,w1,y2,w2,ind,kt,tau,n,goof)
 implicit double precision(a-h,o-z)
-logical goof
+integer goof
 dimension y(n), w(n), y1(n), w1(n), y2(n), w2(n), ind(n), kt(n)
 
-goof = .false.
+goof = 0
 
 # Handle the linear ordering cases:
 if(tau >= dble(n)) {
@@ -43,7 +43,7 @@ do i = 1,n {
 }
 
 if(k1==0 | k2==0) {
-	goof = .true.
+	goof = 1
 	return
 }
 
@@ -106,6 +106,6 @@ if(k1+k2 == n-1) {
 		w(i) = w1(i)
 	}
 }
-else goof = .true.
+else goof = 1
 return
 end

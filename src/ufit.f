@@ -1,7 +1,7 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine ufit(xk,wk,xmode,x,w,mse,x1,w1,x2,w2,ind,kt,n,goof)
       implicit double precision(a-h,o-z)
-      logical goof
+      integer goof
       double precision mse
       dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind
      *(n), kt(n)
@@ -17,7 +17,7 @@ C Output from Public domain Ratfor, version 1.0
 23004 continue
 23005 continue
       call unimode(x,w,x1,w1,x2,w2,ind,kt,x0,n,goof)
-      if(goof)then
+      if(goof .gt. 0)then
       return
       endif
       sse = 0.d0
@@ -43,7 +43,7 @@ C Output from Public domain Ratfor, version 1.0
 23012 continue
 23013 continue
       call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
-      if(goof)then
+      if(goof .gt. 0)then
       return
       endif
       if(xmode .lt. 0)then

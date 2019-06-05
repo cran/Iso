@@ -1,6 +1,6 @@
 subroutine ufit(xk,wk,xmode,x,w,mse,x1,w1,x2,w2,ind,kt,n,goof)
 implicit double precision(a-h,o-z)
-logical goof
+integer goof
 double precision mse
 dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind(n), kt(n)
 
@@ -34,7 +34,7 @@ if(xmode < 0) {
 			w(j) = wk(j)
 		}
 		call unimode(x,w,x1,w1,x2,w2,ind,kt,x0,n,goof)
-		if(goof) return
+		if(goof > 0) return
 		sse = 0.d0
 		do j = 1,n {
 			sse = sse + (x(j)-xk(j))**2
@@ -56,7 +56,7 @@ do j = 1,n {
 
 call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
 
-if(goof) return
+if(goof > 0) return
 if(xmode < 0) {
 	mse = ssemin/dble(n)
 	if(x(k1)>=x(k2)) xmode=dble(k1)

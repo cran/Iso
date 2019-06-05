@@ -1,6 +1,6 @@
 Package: Iso
-Version: 0.0-17
-Date: 2015-06-01
+Version: 0.0-18
+Date: 2019-06-05
 Title: Functions to Perform Isotonic Regression
 Author: Rolf Turner <r.turner@auckland.ac.nz>
 Maintainer: Rolf Turner <r.turner@auckland.ac.nz>
@@ -8,9 +8,10 @@ Depends: R (>= 1.7.0)
 Description: Linear order and unimodal order (univariate)
 	     isotonic regression; bivariate isotonic regression
 	     with linear order on both variables.
+LazyData: true
 License: GPL (>= 2)
 URL: http://www.stat.auckland.ac.nz/~rolf/
 NeedsCompilation: yes
-Packaged: 2015-06-01 03:56:08 UTC; rolf
+Packaged: 2019-06-04 22:15:06 UTC; rolf
 Repository: CRAN
-Date/Publication: 2015-06-01 08:27:01
+Date/Publication: 2019-06-05 04:40:03 UTC

@@ -40,10 +40,10 @@ rslt <- .Fortran(
 		ind=integer(n),
 		kt=integer(n),
 		n=as.integer(n),
-		goof=logical(1),
+		goof=integer(1),
 		PACKAGE="Iso"
 		)
-if(rslt$goof) stop('Goof in unimode subroutine called by ufit subroutine.\n')
+if(rslt$goof > 0) stop('Goof in unimode subroutine called by ufit subroutine.\n')
 imode <- if(lmode < 0) rslt$xmode else lmode
 lmode <- if(lmode < 0) x[imode] else mode.save
 ys <- rslt$y

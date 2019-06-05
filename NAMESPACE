@@ -1,1 +1,2 @@
 export(pava, pava.sa, ufit, biviso, unimode.sa)
+importFrom("stats", "stepfun")
