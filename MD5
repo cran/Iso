@@ -1,5 +1,5 @@
 db12c0e21506023c16746a2f81f990ba *ChangeLog
-dbccf88b21373db3b583dd38ccbc4ddb *DESCRIPTION
+032624737b080250ceec9f3422595802 *DESCRIPTION
 db737cab1c5d6510e6db594982c882e5 *NAMESPACE
 7a25105b8776d573a2131cbfb209b5fb *R/First.R
 e721e931a4d92024a34c98d9a7a62c8e *R/biviso.R
@@ -24,7 +24,7 @@ cbbebf81197204959510757e372eaf5e *inst/smooth.f.orig
 42ecac604a72602340260882cbd879a3 *man/pava.Rd
 705bc7f1ca9f794d5b5e5a32a86cc44d *man/ufit.Rd
 da587b8453ff535e7087ea0273ef33af *man/vigour.Rd
-26f4ff478fcc7c5956cf48c9cdcba35e *src/init.c
+70fc0aabf851954419ba735a10be338f *src/init.c
 7e357534fc2e0be02f5f402a47c6c7d2 *src/pava.f
 2cc99b732e6467d634d990b4f9ac6315 *src/smooth.f
 806434c5891db7f585ec56b8c154e043 *src/ufit.f

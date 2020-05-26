@@ -1,5 +1,5 @@
 Package: Iso
-Version: 0.0-18
+Version: 0.0-18.1
 Date: 2019-06-05
 Title: Functions to Perform Isotonic Regression
 Author: Rolf Turner <r.turner@auckland.ac.nz>
@@ -12,6 +12,6 @@ LazyData: true
 License: GPL (>= 2)
 URL: http://www.stat.auckland.ac.nz/~rolf/
 NeedsCompilation: yes
-Packaged: 2019-06-04 22:15:06 UTC; rolf
+Packaged: 2020-05-25 13:47:19 UTC; ripley
 Repository: CRAN
-Date/Publication: 2019-06-05 04:40:03 UTC
+Date/Publication: 2020-05-26 05:13:34 UTC

@@ -12,9 +12,10 @@ extern void F77_NAME(smooth)(int *, int *, int *, double *,
                      double *, double *, double *, int *, int *,
                      double *, double *, double *, int *, double *,
                      double *, double *, double *, int *);
-extern void F77_NAME(ufit)(double *, double *, double *, double *,
-                     double *, int *, double *, double *, double *,
-                     double *, int *, int *, int *, int *);
+extern void F77_NAME(ufit)(double *xk, double *wk, double *xmode, double *x,
+	       	double *w, double *mse, double *x1, double *w1, double *x2,
+	       	double *w2, int *ind, int *kt, int *n, int *goof);
+
 /*
    Note that the unimode routine does not feature in the foregoing
    since unimode is called only by ufit and never called directly
