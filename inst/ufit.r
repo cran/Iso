@@ -1,8 +1,7 @@
-subroutine ufit(xk,wk,xmode,x,w,mse,x1,w1,x2,w2,ind,kt,n,goof)
+subroutine ufit(y,w,imode,ymdf,wmdf,mse,y1,w1,y2,w2,ind,kt,n)
 implicit double precision(a-h,o-z)
-integer goof
-double precision mse
-dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind(n), kt(n)
+double precision imode, mse, imax
+dimension y(n), w(n), ymdf(n), wmdf(n),y1(n), w1(n), y2(n), w2(n), ind(n), kt(n)
 
 # Nude virgin of ufit --- 18/8/95.
 # The changes are based upon Pete's observation that when we are
@@ -11,7 +10,7 @@ dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind(n), kt(n)
 # is at k, then the half-points k-0.5 and k+05 give SSEs that are
 # at least as small as and hence are equal to the SSE at k.  This is
 # because if a function is increasing on 1,...,k and decreasing on
-# k,...n, then it is increasing on 1,...,(k-1)) and decresing on
+# k,...n, then it is increasing on 1,...,(k-1)) and decreasing on
 # k,...,n !!!  (And likewise for 1,...,k and (k+1),...n.)   Thus if
 # there is an optimum at k then there are optima at k-0.5 and k+0.5.
 # Of course if k=1 then k-0.5 is not considered and likewise if k=n
@@ -21,51 +20,58 @@ dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind(n), kt(n)
 # there is also a whole-point optimum either at k-1 or k.
 #
 # Explanation revised (corrected) 31/05/2015.
+#
+# Note that in this subroutine there is no "x" argument.  The
+# *indices* of a conceptual "x" are dealt with. (22/07/2023)
 
-if(xmode < 0) {
+if(imode < 0) {
 	m      =  n-1
-	x0     =  1.5d0
-	xmax   = -1.d0
+	tau    =  1.5d0
+	imax   = -1.d0
 	ssemin =  1.d200
 
 	do i = 1,m {
 		do j = 1,n {
-			x(j) = xk(j)
-			w(j) = wk(j)
+			ymdf(j) = y(j)
+			wmdf(j) = w(j)
 		}
-		call unimode(x,w,x1,w1,x2,w2,ind,kt,x0,n,goof)
-		if(goof > 0) return
+		call unimode(ymdf,wmdf,y1,w1,y2,w2,ind,kt,tau,n)
 		sse = 0.d0
 		do j = 1,n {
-			sse = sse + (x(j)-xk(j))**2
+			sse = sse + (ymdf(j)-y(j))**2
 		}
 		if(sse < ssemin) {
 			ssemin = sse
-			xmax = x0
+			imax   = tau
 		}
-		x0 = x0+1.d0
+		tau = tau+1.d0
 	}
-	k1 = int(xmax-0.5d0)
-	k2 = int(xmax+0.5d0)
+	k1 = int(imax-0.5d0)
+	k2 = int(imax+0.5d0)
 }
-else xmax = xmode
+else imax = imode
 do j = 1,n {
-   x(j) = xk(j)
-   w(j) = wk(j)
+   ymdf(j) = y(j)
+   wmdf(j) = w(j)
 }
+#call dblepr("imax:",-1,imax,1)
+#call dblepr("y:",-1,y,6)
+#call dblepr("w:",-1,w,6)
+#call dblepr("ymdf:",-1,ymdf,6)
+#call dblepr("wmdf:",-1,wmdf,6)
 
-call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
+call unimode(ymdf,wmdf,y1,w1,y2,w2,ind,kt,imax,n)
+#call labpepr("Got past first call to unimode.",-1)
 
-if(goof > 0) return
-if(xmode < 0) {
+if(imode < 0) {
 	mse = ssemin/dble(n)
-	if(x(k1)>=x(k2)) xmode=dble(k1)
-	else xmode=dble(k2)
+	if(ymdf(k1)>=ymdf(k2)) imode=dble(k1)
+	else imode=dble(k2)
 }
 else {
 	sse = 0.d0
 	do j = 1,n {
-		sse = sse + (x(j)-xk(j))**2
+		sse = sse + (ymdf(j)-y(j))**2
 	}
 	mse = sse/dble(n)
 }

@@ -1,9 +1,7 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine unimode(y,w,y1,w1,y2,w2,ind,kt,tau,n,goof)
+      subroutine unimode(y,w,y1,w1,y2,w2,ind,kt,tau,n)
       implicit double precision(a-h,o-z)
-      integer goof
       dimension y(n), w(n), y1(n), w1(n), y2(n), w2(n), ind(n), kt(n)
-      goof = 0
       if(tau .ge. dble(n))then
       call pava(y,w,kt,n)
       return
@@ -40,24 +38,27 @@ C Output from Public domain Ratfor, version 1.03
       endif
 23008 continue
 23009 continue
-      if(k1.eq.0 .or. k2.eq.0)then
-      goof = 1
-      return
+      if(k1.eq.0)then
+      call rexit("The index of the mode is 0.\n")
+      endif
+      if(k2.eq.0)then
+      call rexit("The index of the mode is one more than the number of i
+     *ndices.\n")
       endif
       if(k1+k2 .eq. n)then
       call pava(y1,w1,kt,k1)
-      do23018 i = 1,k1 
+      do23020 i = 1,k1 
       y(i) = y1(i)
       w(i) = w1(i)
-23018 continue
-23019 continue
+23020 continue
+23021 continue
       call pava(y2,w2,kt,k2)
-      do23020 i = 1,k2 
+      do23022 i = 1,k2 
       j = n+1-i
       y(j) = y2(i)
       w(j) = w2(i)
-23020 continue
-23021 continue
+23022 continue
+23023 continue
       return
       endif
       if(k1+k2 .eq. n-1)then
@@ -67,7 +68,7 @@ C Output from Public domain Ratfor, version 1.03
       i1 = 1
       i2 = 1
       i = 1
-23024 continue
+23026 continue
       if(i1 .le. k1)then
       t1 = y1(i1)
       else
@@ -89,33 +90,34 @@ C Output from Public domain Ratfor, version 1.03
       endif
       i = i + 1
       if(i .eq. n)then
-      goto 23026
+      goto 23028
       endif
-23025 goto 23024
-23026 continue
+23027 goto 23026
+23028 continue
       y(n) = yk
       ind(n) = k1+1
-      do23035 i = 1,n 
-      w1(ind(i)) = w(i)
-23035 continue
-23036 continue
       do23037 i = 1,n 
-      w(i) = w1(i)
+      w1(ind(i)) = w(i)
 23037 continue
 23038 continue
-      call pava(y,w,kt,n)
       do23039 i = 1,n 
-      y1(ind(i)) = y(i)
-      w1(ind(i)) = w(i)
+      w(i) = w1(i)
 23039 continue
 23040 continue
+      call pava(y,w,kt,n)
       do23041 i = 1,n 
-      y(i) = y1(i)
-      w(i) = w1(i)
+      y1(ind(i)) = y(i)
+      w1(ind(i)) = w(i)
 23041 continue
 23042 continue
+      do23043 i = 1,n 
+      y(i) = y1(i)
+      w(i) = w1(i)
+23043 continue
+23044 continue
       else
-      goof = 1
+      call rexit("The total length of the monotone segments is neither n
+     * nor n-1.")
       endif
       return
       end

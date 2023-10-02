@@ -68,10 +68,11 @@ justification of why this algorithm works.
 
 Algorithms for implementing isotonic regression under orderings
 other than the simple linear order are difficult to construct.
-The best known of such algorithms is the Maximum Lower Sets
-algorithm \cite[p. 24]{RobertsonEtAl1988}.  This algorithm is complicated and hard
-to program.  It is also reputed to run rather slowly, and indeed the
-number of operations required grows exponentially in certain cases.
+The best known of such algorithms is the Maximum Lower Sets algorithm
+\cite[p. 24]{RobertsonEtAl1988}.  This algorithm is complicated
+and hard to program.  It is also reputed to run rather slowly,
+and indeed the number of operations required grows exponentially
+in certain cases.
 
 The motivation for developing an improved algorithm for performing
 such regressions came in part from a data set being studied by
@@ -549,6 +550,9 @@ Kirk Schmidt, a graduate student in the Department of
 Forest Engineering, U.N.B., and his advisor Professor Ted
 Needham, for drawing the problem on tree growth vigour to
 his attention.
+<<echo=FALSE,results=hide>>=
+tools::compactPDF(".",gs_quality="ebook")
+@
 
 \newpage
 

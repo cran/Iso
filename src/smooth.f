@@ -33,27 +33,29 @@ C
       WXSUM = ZERO
       WMIN = 1.0d+08
       DO 3 I = 1, NROW
-        DO 3 J = 1, NCOL
+        DO 4 J = 1, NCOL
           WW = W(I,J)
           IF (WW .LT. ZERO) GO TO 110
           IF (WW .LT. DELTA) GO TO 3
           WSUM = WSUM + WW
           WXSUM = WXSUM + WW * X(I,J)
           IF (WW .LT. WMIN) WMIN = WW
+    4 CONTINUE
     3 CONTINUE
       IF (WSUM .LT. DELTA) GO TO 130
       WMEAN = WXSUM / WSUM
 C
       DO 5 I = 1, NROW
-      DO 5 J = 1, NCOL
+      DO 6 J = 1, NCOL
         WW = W(I,J)
         A(I,J,3) = WW
         A(I,J,4) = X(I,J)
-        IF (WW .GE. DELTA) GO TO 5
+        IF (WW .GE. DELTA) GO TO 6
         A(I,J,3) = FRACT * WMIN
         A(I,J,4) = WMEAN
         ICT = ICT + 1
         IFAULT = 4
+    6 CONTINUE
     5 CONTINUE
 C
 C     Initialize R and C to zero, and set up workspace
@@ -64,10 +66,11 @@ C
       ITIC = 0
     8 ITIC = ITIC + 1
       DO 10 I = 1, NROW
-      DO 10 J = 1, NCOL
+      DO 11 J = 1, NCOL
         G(I,J) = A(I,J,4)
         A(I,J,2) = ZERO
         A(I,J,1) = ZERO
+   11 CONTINUE
    10 CONTINUE
 C
 C     Initialize counter for number of cycles
@@ -119,7 +122,8 @@ C
    55 LCOUNT = 0
       DO 80 J = 1, NCOL
       DO 60 I = 1, NROW
-   60   A(I,J,2) = G(I,J) - A(I,J,2)
+        A(I,J,2) = G(I,J) - A(I,J,2)
+   60  CONTINUE
 C
       CALL PAV(NROW, NDIM, EPS2, A(1,J,2), 1, A(1,J,3), B(1,3), FX,
      * PW, W1, WT, NW)
@@ -226,7 +230,8 @@ C
 C     Determine if all values are ordered
 C
       DO 60 L = 1, IBEL
-   60 IF (FX(L) - FX(L+1) .LE. EPS2) ICOUNT = ICOUNT + 1
+      IF (FX(L) - FX(L+1) .LE. EPS2) ICOUNT = ICOUNT + 1
+   60 CONTINUE
       IF (ICOUNT .NE. IBEL) GO TO 20
 C
 C     Recover final ordered values
@@ -235,7 +240,8 @@ C
       JL = 1
       JU = NW(1)
    80 DO 90 L = JL,JU
-   90 FINALX(L) = FX(J)
+      FINALX(L) = FX(J)
+   90 CONTINUE
       J = J + 1
       IF (J .GT. NWC) GO TO 100
       JL = JU + 1
@@ -243,7 +249,8 @@ C
       GO TO 80
   100 IF (IORDER .EQ. 1) RETURN
       DO 110 I = 1, K
-  110 FINALX(I) = -FINALX(I)
+      FINALX(I) = -FINALX(I)
+  110 CONTINUE
       RETURN
       END
 
@@ -259,8 +266,9 @@ C
 C
       DEL = ZERO
       DO 20 I = 1, NROW
-      DO 20 J = 1, NCOL
+      DO 30 J = 1, NCOL
         DEL = DEL + A1(I,J) * A1(I,J)
+   30 CONTINUE
    20 CONTINUE
       IFLAG = IFLAG + 1
       RETURN

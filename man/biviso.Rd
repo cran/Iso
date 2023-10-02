@@ -91,8 +91,7 @@ Isotonic regression in two independent variables; Algorithm AS 206;
 JRSSC (Applied Statistics), vol. 33, no. 3, pp. 352-357, 1984.
 }
 \author{Rolf Turner
-\email{r.turner@auckland.ac.nz}
-\url{http://www.stat.auckland.ac.nz/~rolf}
+\email{rolfturner@posteo.net}
 }
 \section{WARNING}{
 This  function appears not to achieve exact isotonicity, at least

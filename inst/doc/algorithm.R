@@ -18,7 +18,7 @@ options(useFancyQuotes=FALSE)
 
 
 ###################################################
-### code chunk number 3: algorithm.Rnw:474-482
+### code chunk number 3: algorithm.Rnw:475-483
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 require(Iso)
@@ -32,7 +32,7 @@ par(OP)
 
 
 ###################################################
-### code chunk number 4: algorithm.Rnw:500-506 (eval = FALSE)
+### code chunk number 4: algorithm.Rnw:501-507 (eval = FALSE)
 ###################################################
 ## par(mfrow=c(3,2),mar=c(4,4,3,1))
 ## for(i in 2:6) {
@@ -43,7 +43,7 @@ par(OP)
 
 
 ###################################################
-### code chunk number 5: algorithm.Rnw:519-525 (eval = FALSE)
+### code chunk number 5: algorithm.Rnw:520-526 (eval = FALSE)
 ###################################################
 ##    xm <- apply(vigour[,2:6],1,mean)
 ##    par(mar=c(4,4,3,1))
@@ -54,7 +54,7 @@ par(OP)
 
 
 ###################################################
-### code chunk number 6: algorithm.Rnw:530-536
+### code chunk number 6: algorithm.Rnw:531-537
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
    xm <- apply(vigour[,2:6],1,mean)
@@ -63,5 +63,11 @@ getOption("SweaveHooks")[["fig"]]()
         xlab="year",ylab="vigour",main="Mean over stands",cex.main=1.5)
    points(vigour[,1],xm,pch=22,col="red")
    for(i in 2:6) points(vigour[,1],vigour[,i],pch="+",col="blue")
+
+
+###################################################
+### code chunk number 7: algorithm.Rnw:553-554
+###################################################
+tools::compactPDF(".",gs_quality="ebook")
 
 

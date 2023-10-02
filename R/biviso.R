@@ -29,27 +29,27 @@ nc   <- ncol(y)
 nd   <- max(nr,nc)
 rslt <- .Fortran(
 	"smooth",
-	nrow=as.integer(nr),
-	ncol=as.integer(nc),
-	ndim=as.integer(nd),
-	x=as.double(y),
-	w=as.double(w),
-	a=double(4*nr*nc),
-	b=double(5*nd),
-	ncycle=as.integer(ncycle),
-	icycle=integer(1),
-	g=double(nr*nc),
-	eps1=as.double(eps),
-	eps2=as.double(eps2),
-	ifault=integer(1),
-        fx=double(nd),
-        pw=double(nd),
-        wi=double(nd),
-        wt=double(nd),
-        nw=integer(nd),
+	NROW=as.integer(nr),
+	NCOL=as.integer(nc),
+	NDIM=as.integer(nd),
+	X=as.double(y),
+	W=as.double(w),
+	A=double(4*nr*nc),
+	B=double(5*nd),
+	NCYCLE=as.integer(ncycle),
+	ICYCLE=integer(1),
+	G=double(nr*nc),
+	EPS1=as.double(eps),
+	EPS2=as.double(eps2),
+	IFAULT=integer(1),
+        FX=double(nd),
+        PW=double(nd),
+        W1=double(nd),
+        WT=double(nd),
+        NW=integer(nd),
 	PACKAGE="Iso"
 )
-if(rslt$ifault != 0) {
+if(rslt$IFAULT != 0) {
 	if(rslt$ifault == 4 && warn) {
 		warning(paste("A near zero weight less than delta=0.00001\n",
                               "was replaced by delta.\n",sep=""))
@@ -59,8 +59,8 @@ if(rslt$ifault != 0) {
 		warning(paste("Algorithm gave ifault = ",rslt$ifault,".\n",sep=""))
 	}
 }
-m <- matrix(rslt$g,nrow=nr,ncol=nc)
-attr(m,"icycle") <- rslt$icycle
-attr(m,"ifault") <- rslt$ifault
+m <- matrix(rslt$G,nrow=nr,ncol=nc)
+attr(m,"icycle") <- rslt$ICYCLE
+attr(m,"ifault") <- rslt$IFAULT
 m
 }

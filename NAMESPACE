@@ -1,2 +1,4 @@
-export(pava, pava.sa, ufit, biviso, unimode.sa)
+exportPattern("*")
 importFrom("stats", "stepfun")
+useDynLib(Iso)
+

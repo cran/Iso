@@ -1,9 +1,8 @@
-ufit <- function(y,lmode=NULL,x=NULL,w=NULL,lc=TRUE, rc=TRUE,
-                 type=c("raw","stepfun","both"))
-{
+ufit <- function(y,lmode=NULL,imode=NULL,x=NULL,w=NULL,lc=TRUE, rc=TRUE,
+                 type=c("raw","stepfun","both")) {
 #
 # Function `ufit'.  Calculates the isotonic unimodal fit to a data
-# sequence y, with mode at ``lmode''.  If lmode==NULL, then it determines
+# sequence y, with mode at ``lmode''.  If lmode==NULL, then ufit() determines
 # the optimal (least squares) location for the mode, and the fit
 # for this optimum value.  The optimum mode may, by virtue of the
 # nature of the procedure, be taken to be one of the points x_i, i =
@@ -17,21 +16,49 @@ type <- match.arg(type)
 n <- length(y)
 if(is.null(w)) w <- rep(1,n)
 if(is.null(x)) x <- seq(0,1,length=n)
-if(is.null(lmode)) lmode <- -1
-else {
-	mode.save <- lmode
-	k1 <- sum(x <= lmode)
-	k2 <- n + 1 - sum(x >= lmode)
-	lmode <- (k1+k2)/2
-}
+nargtype <- 1 + (!is.null(lmode)) + (!is.null(imode))*2
+# 1 <--> neither is specified.
+# 2 <--> lmode is specified, imode is not
+# 3 <--> imode is specified, lmode is not
+# 4 <--> both are specified
+
+switch(EXPR=nargtype,
+    {
+# 1; neither lmode nor imode has been specified.
+        imode <- -1 # Triggers search for optimum.
+    },
+    {
+# 2; lmode is specified, imode is not specified.
+        if(!lmode %in% x) {
+            whinge <- paste0("If \"lmode\" is specified, it must be an entry\n",
+                             "  of \"x\" which defaults to",
+                             " seq(0,1,length=length(y)).\n")
+            stop(whinge)
+        }
+        imode <- which(x==lmode)
+    },
+# 3; lmode is not specified, imode is specified.
+    {
+        if(!imode %in% 1:n) {
+            whinge <- paste0("If \"imode\" is specified, it must be an integer\n",
+                             "  between 1 and n = length(y).\n")
+            stop(whinge)
+        }
+        lmode <- x[imode]
+    },
+# 4; both lmode and imode are specified --- error.
+    {
+        stop("Specify at most one of \"lmode\" and \"imode\".\n")
+    }
+)
 
 rslt <- .Fortran(
 		"ufit",
-		yk=as.double(y),
-		wk=as.double(w),
-		xmode=as.double(lmode),
-		y=double(n),
-		w=double(n),
+		y=as.double(y),
+		w=as.double(w),
+		imode=as.double(imode),
+		ymdf=double(n),
+		wmdf=double(n),
 		mse=double(1),
 		y1=double(n),
 		w1=double(n),
@@ -40,23 +67,23 @@ rslt <- .Fortran(
 		ind=integer(n),
 		kt=integer(n),
 		n=as.integer(n),
-		goof=integer(1),
 		PACKAGE="Iso"
 		)
-if(rslt$goof > 0) stop('Goof in unimode subroutine called by ufit subroutine.\n')
-imode <- if(lmode < 0) rslt$xmode else lmode
-lmode <- if(lmode < 0) x[imode] else mode.save
-ys <- rslt$y
+if(nargtype==1) {
+    imode <- rslt$imode
+    lmode <- x[imode]
+}
+ystar <- rslt$ymdf
 if(type%in%c("stepfun","both")) {
-	kind <- 1+which(diff(ys)!=0)
+	kind <- 1+which(diff(ystar)!=0)
 	if(!(n%in%kind)) kind <- c(kind,n)
-	y0    <- c(ys[1],ys[kind])
-	h     <- stepfun(x[kind],y0)
+	y0   <- c(ystar[1],ystar[kind])
+	h    <- stepfun(x[kind],y0)
 }
 i     <- floor(imode)
-if(!lc) ys[i]   <- NA
-if( (!rc) & (i < n) ) ys[i+1] <- NA
-switch(type,raw=list(x=x,y=ys,mode=lmode,mse=rslt$mse),
+if(!lc) ystar[i]   <- NA
+if( (!rc) & (i < n) ) ystar[i+1] <- NA
+switch(type,raw=list(x=x,y=ystar,mode=lmode,mse=rslt$mse),
             stepfun=h,
-            both=list(x=x,y=ys,mode=lmode,mse=rslt$mse,h=h))
+            both=list(x=x,y=ystar,mode=lmode,mse=rslt$mse,h=h))
 }

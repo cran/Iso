@@ -77,8 +77,7 @@ The step function is formed using the default arguments of \code{stepfun()}.
 In particular it is \emph{right} continuous.
 }
 \author{Rolf Turner
-\email{r.turner@auckland.ac.nz}
-\url{http://www.stat.auckland.ac.nz/~rolf}
+\email{rolfturner@posteo.net}
 }
 \references{
 Robertson, T., Wright, F. T. and Dykstra, R.  L.  (1988).

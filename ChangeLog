@@ -156,3 +156,76 @@ Version 0.0-17 |--> 0.0-18
 
 (2) Added exemplary data set "vigour", the data on vigour
 of growth in stands of spruce trees in New Brunswick, Canada.
+
+Uploaded to CRAN 05/06/2019 (???).
+
+# 26/May/2020
+Fixed glitch in src/init.c --- the declaration for ufit incorrectly
+indicate that "mse" was integer, whereas in fact mse was declared
+*double precision* in ufit.r.
+
+This error was fixed on CRAN by the CRAN maintainers, and was
+kindly explained to me by Brian Ripley.
+
+The version now on CRAN appears to retain the "old" version
+number, i.e. 0.0-18.
+
+Version 0.0-18 |--> 0.0-19
+
+# 23/July/2023
+Fixed a serious infelicity that was kindly pointed out to me by
+Zhiwei Zhang.  The code suffered from an unfortunate conflation
+of the mode location and the index, amongst the x-values, of that
+location.  It was still possible to get correct answers but one
+had to be very careful.
+
+The function ufit() now has two arguments, for specifying the location
+of the mode:  "lmode", the actual location, and "imode" the index among
+the x-values of the location.  It is an error to specify both of these
+arguments.  If *neither* is specified, then the function performs an
+exhaustive search among all possible mode locations for the optimal
+(in terms of minising the error sum of squares) location.
+
+An error is thrown if lmode is specified and it is not one of
+the x-values.  Likewise an error is thrown if imode is specified
+and it is not among the indices from 1 to n (where n is the length of y).
+Note that if x is not specified it defaults to an equi-spaced sequence
+of length n on [0,1].
+
+# 01/October/2023.
+Finally got around to submitting the package to CRAN.  (CRAN was
+inactive back when the actual adjustments were made, so I didn't
+submit it at the time, and then it slipped off the radar
+
+Fixed some kludges in the Fortran subroutine smooth.f (code from
+Applied Statistics Algorithm AS 206) that now trigger warnings.
+(Problem with nested do loops terminating at the same label.)
+Had to change a "GO TO" from "GO TO 5" to "GO TO 6" (where 6 is the
+new label for the inner loop) on line 53.  Took forever to track
+down what was going wrong!!!
+
+Package built and checked; submitted to CRAN.
+
+Version 0.0-19 |--> 0.0-20
+
+At CRAN's behest, "compacted" the vignette file algorithm.pdf,
+using (from within the vignettes directory):
+
+    tools::compactPDF("./algorithm.pdf",gs_quality="ebook")
+
+The response said that the size was reduced from 107Kb to 88Kb
+(although ls -l gave the size of algorithm.pdf to be about 109 Kb
+before, and about 89.9 Kb after.
+
+Whereas the CRAN message said that the reduction was/would be from
+349 Kb to 99 Kb.
+
+Nothing makes any sense.
+
+Version 0.0-20 |--> 0.0-21
+
+On Ivan Krylov's advice did the build using
+
+   R CMD build --compact-vignettes=both
+
+Fingers crossed.

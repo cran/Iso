@@ -1,64 +1,57 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine ufit(xk,wk,xmode,x,w,mse,x1,w1,x2,w2,ind,kt,n,goof)
+      subroutine ufit(y,w,imode,ymdf,wmdf,mse,y1,w1,y2,w2,ind,kt,n)
       implicit double precision(a-h,o-z)
-      integer goof
-      double precision mse
-      dimension xk(n), wk(n), x(n), w(n),x1(n), w1(n), x2(n), w2(n), ind
-     *(n), kt(n)
-      if(xmode .lt. 0)then
+      double precision imode, mse, imax
+      dimension y(n), w(n), ymdf(n), wmdf(n),y1(n), w1(n), y2(n), w2(n),
+     * ind(n), kt(n)
+      if(imode .lt. 0)then
       m = n-1
-      x0 = 1.5d0
-      xmax = -1.d0
+      tau = 1.5d0
+      imax = -1.d0
       ssemin = 1.d200
       do23002 i = 1,m 
       do23004 j = 1,n 
-      x(j) = xk(j)
-      w(j) = wk(j)
+      ymdf(j) = y(j)
+      wmdf(j) = w(j)
 23004 continue
 23005 continue
-      call unimode(x,w,x1,w1,x2,w2,ind,kt,x0,n,goof)
-      if(goof .gt. 0)then
-      return
-      endif
+      call unimode(ymdf,wmdf,y1,w1,y2,w2,ind,kt,tau,n)
       sse = 0.d0
-      do23008 j = 1,n 
-      sse = sse + (x(j)-xk(j))**2
-23008 continue
-23009 continue
+      do23006 j = 1,n 
+      sse = sse + (ymdf(j)-y(j))**2
+23006 continue
+23007 continue
       if(sse .lt. ssemin)then
       ssemin = sse
-      xmax = x0
+      imax = tau
       endif
-      x0 = x0+1.d0
+      tau = tau+1.d0
 23002 continue
 23003 continue
-      k1 = int(xmax-0.5d0)
-      k2 = int(xmax+0.5d0)
+      k1 = int(imax-0.5d0)
+      k2 = int(imax+0.5d0)
       else
-      xmax = xmode
+      imax = imode
       endif
-      do23012 j = 1,n 
-      x(j) = xk(j)
-      w(j) = wk(j)
-23012 continue
-23013 continue
-      call unimode(x,w,x1,w1,x2,w2,ind,kt,xmax,n,goof)
-      if(goof .gt. 0)then
-      return
-      endif
-      if(xmode .lt. 0)then
+      do23010 j = 1,n 
+      ymdf(j) = y(j)
+      wmdf(j) = w(j)
+23010 continue
+23011 continue
+      call unimode(ymdf,wmdf,y1,w1,y2,w2,ind,kt,imax,n)
+      if(imode .lt. 0)then
       mse = ssemin/dble(n)
-      if(x(k1).ge.x(k2))then
-      xmode=dble(k1)
+      if(ymdf(k1).ge.ymdf(k2))then
+      imode=dble(k1)
       else
-      xmode=dble(k2)
+      imode=dble(k2)
       endif
       else
       sse = 0.d0
-      do23020 j = 1,n 
-      sse = sse + (x(j)-xk(j))**2
-23020 continue
-23021 continue
+      do23016 j = 1,n 
+      sse = sse + (ymdf(j)-y(j))**2
+23016 continue
+23017 continue
       mse = sse/dble(n)
       endif
       return

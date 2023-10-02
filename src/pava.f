@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine pava(y,w,kt,n)
       implicit double precision(a-h,o-z)
       logical same
